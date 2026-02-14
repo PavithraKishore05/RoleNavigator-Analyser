@@ -1,179 +1,159 @@
-# � RoleNavigator - Resume Analyzer
+# RoleNavigator – AI Resume Analyser
 
-## Overview
+## 📌 Overview
 
-**RoleNavigator-Resume Analyser** is an AI-driven web application designed to evaluate resumes and provide intelligent, actionable insights to improve job readiness. The system generates a structured resume score and delivers job-specific recommendations by comparing the resume against a provided job description.
-This project demonstrates the integration of AI/LLMs with modern web technologies to solve a real-world recruitment challenge.
+**RoleNavigator** is an AI-powered resume analysis platform that evaluates resumes against a job description and delivers structured, actionable insights to improve hiring outcomes.
 
-The system evaluates resumes based on critical criteria to maximize readability and Applicant Tracking System (ATS) compatibility:
-
-* **Contact Information**
-* **Education**
-* **Skills**
-* **Work Experience**
-* **Formatting & Structure**
-* **ATS Optimization**
-* **Keywords & Content Quality**
-
-It suggests specific improvements, such as fixing section headers, improving formatting, adding bullet points, or enhancing skills and experience descriptions.
+The system combines rule-based resume evaluation, ATS compatibility checks, and **Groq LLM API–driven job alignment analysis** to provide intelligent, role-specific recommendations.
 
 ---
 
-## 🚀 Features
+## ✨ Key Features
 
-* **Upload and Analyze** PDF resumes.
-* **Automated PDF text extraction** using `pdfplumber`.
-* **Comprehensive Scoring System** based on industry-standard resume structure.
-* **AI-powered recommendations** based on job description provided.
-* **Detailed Feedback** for **ATS compatibility**.
-* **Clean and simple user interface** for a great user experience.
-* **Fast backend processing** using **Flask**.
-* **Versatile**—works effectively for both students and experienced professionals.
-* **Sample Resume Testing**-Preloaded sample resumes allow users to test the system like Software Engineer,Data Scientist,UX Designer.
+### 📄 Resume Analysis
+- Upload and analyze **PDF resumes**
+- Automated text extraction using `pdfplumber`
+- Section-wise evaluation and checks ATS compatability:
+  - Contact Information
+  - Professional Summary
+  - Work Experience
+  - Education
+  - Skills
+- Overall resume score (0–100)
 
 ---
 
-## 🏗️ Project Architecture
+### 💪 Strength Detection
+The platform automatically identifies strong elements such as:
+- ✔ Professional formatting
+- ✔ Complete contact information
+- ✔ Clear section headings
+- ✔ Well-structured experience section
+- ✔ ATS-friendly layout
+- ✔ Strong keyword alignment
 
-The system utilizes a multi-component architecture to handle file upload, data extraction, scoring, and response generation. 
+---
 
-### High-Level System Flow (ASCII Diagram)
+### 🤖 AI Job-Specific Recommendations
 
-```lua
-+-----------------------+
-|        Frontend       |
-|  (HTML, CSS, JS, Vite)|
-+----------+------------+
-           |
-           | Upload PDF
-           v
-+----------+------------+
-|     Backend API      |
-|        (Flask)       |
-+----------+------------+
-           |
-+-----------------+------------------+
-|                 |                  |
-v                 v
-+---------------------------+ +--------------------------+
-|      PDF Processing       | |  Resume Scoring Engine   |
-| (pdfplumber extraction)   | | (Rules + Checks + Score) |
-+-------------+-------------+ +-------------+------------+
-|             |
-v             v
-+-------+------------------+ +------------+-------------+
-| Extracted Resume Content | | Feedback & Suggestions |
-+------------+-------------+ +------------+-------------+
-             |
-+--------------------+--------------------+
-                      |
-                      v
-+--------------+--------------+
-| Final Response |
-| JSON + Score + Feedback |
-+------------------------------+
-```
-Mermaid Architecture Diagram (GitHub Renderable)Code snippetflowchart TD
-```lua
-A[User Uploads PDF] --> B[Frontend <br>HTML/CSS/JS/Vite]
-B --> C[Flask Backend API]
+Using **Groq LLM API**, the system compares:
 
-C --> D[PDF Extraction <br> pdfplumber]
-C --> E[Scoring Engine <br> Resume Rules & Checks]
+> Resume Content + Job Description
 
-D --> F[Extracted Resume Content]
-E --> G[Score + Improvement Feedback]
+Each recommendation includes:
+- **Current Status** – What is missing or weak
+- **Why It’s Needed** – Based on job description
+- **Action Steps** – Concrete improvement suggestions
+- **Where to Add It** – Suggested resume section
+- **Impact** – Expected improvement in hiring probability
 
-F --> H[Final Response JSON]
-G --> H
+Recommendations are categorized into:
 
-H --> I[Display Results to User]
-```
+#### 🔴 High Priority (Critical Gaps)
+- Major missing requirements for the target role.
+- In demand skills to achieve the target role.
+- Suggest the projects to work on for the required job description.
+
+---
+
+#### 🟡 Medium Priority (Optimization)
+- Improve measurable achievements
+- Strengthen project descriptions
+- Add job-relevant keywords
+- Enhance summary alignment
+
+---
+
+#### 🟢 Low Priority (Enhancements)
+- Minor formatting refinements
+- Optional certifications
+- Soft skill improvements
+
+---
+
+### 🧠 Skills to Develop for This Role
+
+A dedicated AI-generated section highlights:
+- Missing technical skills
+- Required tools & frameworks
+- Domain-specific technologies
+- Important soft skills
+
+This acts as a **career improvement roadmap**.
+
+---
+
+### 📊 Content Analysis Dashboard
+
+Section-wise scoring is provided for:
+- Contact Information
+- Summary
+- Experience
+- Education
+- Skills
+
+Each section is evaluated for completeness, structure, and clarity.
+
+---
+
+### 🏢 ATS Compatibility Evaluation
+
+The platform validates resumes against common ATS standards:
+
+-  Standard fonts detected
+-  Clear section headings
+-  Contact information present
+-  No complex formatting
+-  Keyword coverage analysis and improvement suggestions
+
+---
+
+### 📄 PDF Report Generation
+
+Users can generate and download a structured PDF report containing all the analaysis data.
+
+---
+
+### 🔗 Share Results
+
+The **Share Results** feature allows users to share their resume analysis via: Email,WhatsApp and other supported platforms.
+
+This enables collaboration with mentors, peers, or career advisors.
+
+---
+
+## 🔄 Workflow
+
+1. Upload resume (PDF)
+2. Enter job description
+3. Resume parsing and rule-based scoring
+4. AI-powered job alignment analysis
+5. ATS compatibility validation
+6. View dashboard results
+7. Download or share report
+
+---
+
 ## 🛠️ Tech Stack
 
-| Component | Technology |
-| :--- | :--- |
-| **Backend** | Python, **Flask** |
-| **PDF Parsing** | **pdfplumber** |
-| **Frontend** | Node.js, HTML, CSS, JavaScript, **Vite** |
-| **Build Tools** | npm |
+| Layer | Technology |
+|--------|------------|
+| **Backend** | Python, Flask |
+| **Frontend** | HTML, CSS, JavaScript, Vite |
+| **PDF Parsing** | pdfplumber |
+| **AI Integration** | Groq LLM API |
 
 ---
 
-## 📦 Installation & Setup (Local Machine)
+## 🎯 Use Cases
 
-### Prerequisites
-
-Make sure you have the following installed on your system:
-
-* **Node.js** (v18 or above)
-* **npm** (Node Package Manager)
-* **Python**
-
-### Steps to Run Locally
-
-1.  **Clone the Repository**
-    ```bash
-    git clone [https://github.com/MayankSahu297/Anveshan-Hackathon](https://github.com/MayankSahu297/Anveshan-Hackathon)
-    cd Anveshan-Hackathon
-    ```
-
-2.  **Install Dependencies**
-    ```bash
-    npm install
-    ```
-
-3.  **Start the Development Server**
-    ```bash
-    npm run dev
-    ```
-
-4.  **Open in Browser**
-    The application will be accessible at:
-    ```arduino
-    http://localhost:5000
-    ```
-
-### 📘 Commands Explained
-
-| Command | Description |
-| :--- | :--- |
-| `npm install` | Installs all project dependencies for both frontend and backend. |
-| `npm run dev` | Runs the backend (Flask) and starts the frontend development server. |
-| `npm run build` | Builds the production-ready frontend bundle. |
-| `npm start` | Runs the production version of the application. |
-
-### 🤖 Optional: Setup OpenAI Integration (For AI-Powered Recommendations)
-
-For **smarter, AI-generated recommendations** when analyzing resumes with job descriptions:
-
-1. **Get OpenAI API Key**
-   - Visit: https://platform.openai.com/api-keys
-   - Create a new API key
-
-2. **Add to Environment**
-   - Open `.env.local` file in project root
-   - Add your key:
-     ```
-     OPENAI_API_KEY=sk_your_api_key_here
-     ```
-
-3. **How It Works**
-   - ✅ **Without API Key**: Uses fast, rule-based recommendations
-   - ✅ **With API Key**: Generates contextual AI recommendations using Claude
-   - Both provide job-specific suggestions tailored to the role
-
-### ⚠️ Port Configuration
-
-* **Default port:** `5000`
-* To change the port, edit the configuration file: `server/index.ts` (specifically around line 62).
+- Resume optimization for job applications  
+- ATS readiness evaluation  
+- Role-specific resume tailoring  
+- Career guidance and skill gap analysis  
 
 ---
 
-## 🔗 Demo & Links
+## 📌 Project Context
 
-| Type | Link |
-| :--- | :--- |
-| **🎥 Project Demo Video** | [https://youtu.be/UHMXX-FEbL0?si=xDkefIpPugb-mndX](https://youtu.be/UHMXX-FEbL0?si=xDkefIpPugb-mndX) |
-| **🌐 Live Deployment** | [https://anveshan-hackathon.onrender.com/] |
-| **📁 GitHub Repository** | [https://github.com/MayankSahu297/Anveshan-Hackathon](https://github.com/MayankSahu297/Anveshan-Hackathon) |
+RoleNavigator – Resume Analyzer is a core module within the broader **RoleNavigator platform**, focused on intelligent career alignment and application optimization tools.
