@@ -6,6 +6,12 @@ import { type Server } from "http";
 import viteConfig from "../vite.config";
 import { nanoid } from "nanoid";
 
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+
 const viteLogger = createLogger();
 
 export function log(message: string, source = "express") {
@@ -19,9 +25,6 @@ export function log(message: string, source = "express") {
   console.log(`${formattedTime} [${source}] ${message}`);
 }
 
-/* =======================
-   DEV MODE (Vite)
-   ======================= */
 export async function setupVite(app: Express, server: Server) {
   const serverOptions = {
     middlewareMode: true,
@@ -44,27 +47,24 @@ export async function setupVite(app: Express, server: Server) {
   });
 
   app.use(vite.middlewares);
-
   app.use("*", async (req, res, next) => {
-    try {
-      const url = req.originalUrl;
+    const url = req.originalUrl;
 
+    try {
       const clientTemplate = path.resolve(
         import.meta.dirname,
         "..",
         "client",
-        "index.html"
+        "index.html",
       );
 
+      // always reload the index.html file from disk incase it changes
       let template = await fs.promises.readFile(clientTemplate, "utf-8");
-
       template = template.replace(
         `src="/src/main.tsx"`,
-        `src="/src/main.tsx?v=${nanoid()}"`
+        `src="/src/main.tsx?v=${nanoid()}"`,
       );
-
       const page = await vite.transformIndexHtml(url, template);
-
       res.status(200).set({ "Content-Type": "text/html" }).end(page);
     } catch (e) {
       vite.ssrFixStacktrace(e as Error);
@@ -73,16 +73,12 @@ export async function setupVite(app: Express, server: Server) {
   });
 }
 
-/* =======================
-   PROD MODE (Static)
-   ======================= */
 export function serveStatic(app: Express) {
-  // dist/server -> dist/public
-  const clientDistPath = path.resolve(__dirname, "../public");
+  const clientDistPath = path.resolve(__dirname, "../../dist/client");
 
   if (!fs.existsSync(clientDistPath)) {
     throw new Error(
-      `Could not find the build directory: ${clientDistPath}. Did you run npm run build?`
+      `Could not find the build directory: ${clientDistPath}`
     );
   }
 
